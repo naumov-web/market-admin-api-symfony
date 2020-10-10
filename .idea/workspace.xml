@@ -1,15 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9f11648c-e5bc-43c6-b79c-bdfce307624f" name="Default Changelist" comment="" />
+    <list default="true" id="9f11648c-e5bc-43c6-b79c-bdfce307624f" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/Controller/BaseController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/routes.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/routes.yaml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ComposerSettings" synchronizationState="SYNCHRONIZE">
+  <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
     <execution />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
@@ -133,11 +140,23 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1602335998161</updated>
-      <workItem from="1602335999279" duration="3932000" />
+      <workItem from="1602335999279" duration="4383000" />
+      <workItem from="1602355232380" duration="2135000" />
+      <workItem from="1602357521768" duration="118000" />
+      <workItem from="1602357700870" duration="1449000" />
+      <workItem from="1602360134842" duration="2616000" />
+      <workItem from="1602362897902" duration="1173000" />
+      <workItem from="1602364171439" duration="490000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="720" y="272" width="569" height="561" key="NewPhpClassDialog" timestamp="1602355874455">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="720" y="272" width="569" height="561" key="NewPhpClassDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1602355874455" />
   </component>
 </project>

@@ -1,3 +1,11 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+
+docs_page:
+  path: /dev-tools/docs
+  controller: App\Controller\Web\DocsController::page
+
+docs_file:
+  path: /dev-tools/swagger-file
+  controller: App\Controller\Web\DocsController::swaggerFile

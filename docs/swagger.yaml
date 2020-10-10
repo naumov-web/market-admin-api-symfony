@@ -1,0 +1,224 @@
+swagger: "2.0"
+info:
+  title: "Market admin API"
+  description: "Docs for Market admin API"
+  version: "1.0.0"
+schemes:
+  - "http"
+host: 127.0.0.1:31080
+basePath: /api
+
+paths:
+
+  /login:
+    post:
+      tags:
+        - "login"
+      summary: "Login user"
+      description: ""
+      produces:
+        - "application/json"
+      consumes:
+        - "application/json"
+      parameters:
+        - name: "LoginRequestBody"
+          in: "body"
+          description: "Login request body"
+          required: true
+          schema:
+            $ref: "#/definitions/LoginRequestModel"
+      responses:
+        201:
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/LoginResponseModel"
+        401:
+          description: "Unauthorized"
+        422:
+          description: "Validation error"
+        500:
+          description: "Internal server error"
+
+  /product-categories:
+    get:
+      tags:
+        - "product categories"
+      summary: "Get product categories list"
+      description: ""
+      produces:
+        - "application/json"
+      parameters:
+        - in: "query"
+          name: "limit"
+          type: "integer"
+          description: "Limit of items in response"
+        - in: "query"
+          name: "offset"
+          type: "integer"
+          description: "Offset of items in response"
+        - in: "query"
+          name: "sort_by"
+          type: "string"
+          description: "Sort by column"
+          enum:
+            - "id"
+            - "name"
+        - in: "query"
+          name: "sort_direction"
+          type: "string"
+          description: "Sort direction"
+          enum:
+            - "asc"
+            - "desc"
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/ProductCategoriesListResponseModel"
+        401:
+          description: "Unauthorized"
+        422:
+          description: "Validation error"
+        500:
+          description: "Internal server error"
+    post:
+      tags:
+        - "product categories"
+      summary: "Create product category"
+      description: ""
+      produces:
+        - "application/json"
+      consumes:
+        - "application/json"
+      parameters:
+        - name: "CreateProductCategoryRequestBody"
+          in: "body"
+          description: "Create product category request body"
+          required: true
+          schema:
+            $ref: "#/definitions/CreateProductCategoryRequestModel"
+      responses:
+        201:
+          description: "Successful operation"
+        401:
+          description: "Unauthorized"
+        422:
+          description: "Validation error"
+        500:
+          description: "Internal server error"
+
+  /product-categories/{product_category}:
+    put:
+      tags:
+        - "product categories"
+      summary: "Update product category"
+      description: ""
+      produces:
+        - "application/json"
+      consumes:
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "product_category"
+          type: "integer"
+          required: true
+          description: "Id of product category"
+        - name: "UpdateProductCategoryRequestBody"
+          in: "body"
+          description: "Update product category request body"
+          required: true
+          schema:
+            $ref: "#/definitions/UpdateProductCategoryRequestModel"
+      responses:
+        204:
+          description: "Successful operation"
+        401:
+          description: "Unauthorized"
+        404:
+          description: "Not found"
+        422:
+          description: "Validation error"
+        500:
+          description: "Internal server error"
+    delete:
+      tags:
+        - "product categories"
+      summary: "Delete product category"
+      description: ""
+      produces:
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "product_category"
+          type: "integer"
+          required: true
+          description: "Id of product category"
+      responses:
+        204:
+          description: "Successful operation"
+        401:
+          description: "Unauthorized"
+        404:
+          description: "Not found"
+        500:
+          description: "Internal server error"
+
+definitions:
+
+  ListMetaResponseModel:
+    type: "object"
+    properties:
+      count:
+        type: "integer"
+
+  LoginRequestModel:
+    type: "object"
+    required:
+      - "email"
+      - "password"
+    properties:
+      email:
+        type: "string"
+      password:
+        type: "string"
+
+  LoginResponseModel:
+    type: "object"
+    properties:
+      token:
+        type: "string"
+
+  CreateProductCategoryRequestModel:
+    type: "object"
+    required:
+      - "name"
+    properties:
+      name:
+        type: "string"
+
+  ProductCategoriesListResponseModel:
+    type: "object"
+    properties:
+      items:
+        type: "array"
+        items:
+          $ref: "#/definitions/ProductCategoryResponseModel"
+      meta:
+        type: "object"
+        $ref: "#/definitions/ListMetaResponseModel"
+
+  ProductCategoryResponseModel:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      name:
+        type: "string"
+
+  UpdateProductCategoryRequestModel:
+    type: "object"
+    required:
+      - "name"
+    properties:
+      name:
+        type: "string"
