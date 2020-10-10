@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9f11648c-e5bc-43c6-b79c-bdfce307624f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Controller/BaseController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/routes.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/routes.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/swagger.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/docs/swagger.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -146,7 +145,7 @@
       <workItem from="1602357700870" duration="1449000" />
       <workItem from="1602360134842" duration="2616000" />
       <workItem from="1602362897902" duration="1173000" />
-      <workItem from="1602364171439" duration="490000" />
+      <workItem from="1602364171439" duration="6592000" />
     </task>
     <servers />
   </component>
