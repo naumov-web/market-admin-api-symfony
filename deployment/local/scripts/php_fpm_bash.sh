@@ -3,7 +3,7 @@
 echo -e "\e[32mConnecting to php-fpm container!"
 echo -e "\e[97m"
 
-CONTAINER_ID=`docker ps -qf "name=market_graphql_example_php_fpm"`
+CONTAINER_ID=`docker ps -qf "name=market_api_symfony_php_fpm"`
 
 if [[ -z "$CONTAINER_ID" ]]; then
     echo -e "\e[31mContainer not found in running containers!"
