@@ -306,6 +306,127 @@ paths:
         500:
           description: "Internal server error"
 
+  /products:
+    get:
+      tags:
+        - "products"
+      summary: "Get products list"
+      description: ""
+      produces:
+        - "application/json"
+      parameters:
+        - in: "query"
+          name: "limit"
+          type: "integer"
+          description: "Limit of items in response"
+        - in: "query"
+          name: "offset"
+          type: "integer"
+          description: "Offset of items in response"
+        - in: "query"
+          name: "sort_by"
+          type: "string"
+          description: "Sort by column"
+          enum:
+            - "id"
+            - "name"
+            - "price"
+        - in: "query"
+          name: "sort_direction"
+          type: "string"
+          description: "Sort direction"
+          enum:
+            - "asc"
+            - "desc"
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/ProductsListResponseModel"
+        401:
+          description: "Unauthorized"
+        422:
+          description: "Validation error"
+        500:
+          description: "Internal server error"
+    post:
+      tags:
+        - "products"
+      summary: "Create product"
+      description: ""
+      produces:
+        - "application/json"
+      consumes:
+        - "application/json"
+      parameters:
+        - name: "CreateProductRequestBody"
+          in: "body"
+          description: "Create product request body"
+          required: true
+          schema:
+            $ref: "#/definitions/CreateProductRequestModel"
+      responses:
+        201:
+          description: "Successful operation"
+        401:
+          description: "Unauthorized"
+        422:
+          description: "Validation error"
+        500:
+          description: "Internal server error"
+
+  /products/{product}:
+    put:
+      tags:
+        - "products"
+      summary: "Update product"
+      description: ""
+      produces:
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "product"
+          type: "integer"
+          required: true
+          description: "Id of product"
+        - name: "UpdateProductRequestBody"
+          in: "body"
+          description: "Update product request body"
+          required: true
+          schema:
+            $ref: "#/definitions/UpdateProductRequestModel"
+      responses:
+        204:
+          description: "Successful operation"
+        401:
+          description: "Unauthorized"
+        404:
+          description: "Not found"
+        500:
+          description: "Internal server error"
+    delete:
+      tags:
+        - "products"
+      summary: "Delete product"
+      description: ""
+      produces:
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "product"
+          type: "integer"
+          required: true
+          description: "Id of product"
+      responses:
+        204:
+          description: "Successful operation"
+        401:
+          description: "Unauthorized"
+        404:
+          description: "Not found"
+        500:
+          description: "Internal server error"
+
 definitions:
 
   HandbookItemResponseModel:
@@ -477,3 +598,90 @@ definitions:
         type: "string"
       type_id:
         type: "integer"
+
+  ProductsListResponseModel:
+    type: "object"
+    properties:
+      items:
+        type: "array"
+        items:
+          $ref: "#/definitions/ProductResponseModel"
+        meta:
+          type: "object"
+          $ref: "#/definitions/ListMetaResponseModel"
+
+  ProductResponseModel:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      product_category_id:
+        type: "integer"
+      product_category_name:
+        type: "string"
+      name:
+        type: "string"
+      description:
+        type: "string"
+      price:
+        type: "number"
+      files:
+        type: "array"
+        items:
+          $ref: "#/definitions/FileResponseModel"
+      parameters:
+        type: "array"
+        items:
+          $ref: "#/definitions/ProductParameterValueResponseModel"
+
+  FileResponseModel:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      name:
+        type: "string"
+      url:
+        type: "string"
+      mime:
+        type: "string"
+
+  ProductParameterValueResponseModel:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      parameter_id:
+        type: "integer"
+      parameter_name:
+        type: "string"
+      value:
+        type: "string"
+
+  UpdateProductRequestModel:
+    type: "object"
+    required:
+      - "name"
+      - "product_category_id"
+      - "price"
+    properties:
+      name:
+        type: "string"
+      product_category_id:
+        type: "integer"
+      description:
+        type: "string"
+      price:
+        type: "number"
+      file_ids:
+        type: "array"
+        items:
+          type: "integer"
+      files:
+        type: "array"
+        items:
+          $ref: "#/definitions/CreateFileRequestModel"
+      parameters:
+        type: "array"
+        items:
+          $ref: "#/definitions/CreateProductParameterValueRequestModel"
