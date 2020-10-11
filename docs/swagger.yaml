@@ -427,6 +427,128 @@ paths:
         500:
           description: "Internal server error"
 
+  /users:
+    get:
+      tags:
+        - "users"
+      summary: "Get users list"
+      description: ""
+      produces:
+        - "application/json"
+      parameters:
+        - in: "query"
+          name: "limit"
+          type: "integer"
+          description: "Limit of items in response"
+        - in: "query"
+          name: "offset"
+          type: "integer"
+          description: "Offset of items in response"
+        - in: "query"
+          name: "sort_by"
+          type: "string"
+          description: "Sort by column"
+          enum:
+            - "id"
+            - "name"
+            - "email"
+            - "phone"
+        - in: "query"
+          name: "sort_direction"
+          type: "string"
+          description: "Sort direction"
+          enum:
+            - "asc"
+            - "desc"
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/UsersListResponseModel"
+        401:
+          description: "Unauthorized"
+        422:
+          description: "Validation error"
+        500:
+          description: "Internal server error"
+    post:
+      tags:
+        - "users"
+      summary: "Create user"
+      description: ""
+      produces:
+        - "application/json"
+      consumes:
+        - "application/json"
+      parameters:
+        - name: "CreateUserRequestBody"
+          in: "body"
+          description: "Create user request body"
+          required: true
+          schema:
+            $ref: "#/definitions/CreateUserRequestModel"
+      responses:
+        201:
+          description: "Successful operation"
+        401:
+          description: "Unauthorized"
+        422:
+          description: "Validation error"
+        500:
+          description: "Internal server error"
+
+  /users/{user}:
+    put:
+      tags:
+        - "users"
+      summary: "Update user"
+      description: ""
+      produces:
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "user"
+          type: "integer"
+          required: true
+          description: "Id of user"
+        - name: "UpdateUserRequestBody"
+          in: "body"
+          description: "Update user request body"
+          required: true
+          schema:
+            $ref: "#/definitions/UpdateUserRequestModel"
+      responses:
+        204:
+          description: "Successful operation"
+        401:
+          description: "Unauthorized"
+        404:
+          description: "Not found"
+        500:
+          description: "Internal server error"
+    delete:
+      tags:
+        - "users"
+      summary: "Delete user"
+      description: ""
+      produces:
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "user"
+          type: "integer"
+          required: true
+          description: "Id of user"
+      responses:
+        204:
+          description: "Successful operation"
+        401:
+          description: "Unauthorized"
+        404:
+          description: "Not found"
+        500:
+          description: "Internal server error"
+
 definitions:
 
   HandbookItemResponseModel:
@@ -685,3 +807,62 @@ definitions:
         type: "array"
         items:
           $ref: "#/definitions/CreateProductParameterValueRequestModel"
+
+  UsersListResponseModel:
+    type: "object"
+    properties:
+      items:
+        type: "array"
+        items:
+          $ref: "#/definitions/UserResponseModel"
+      meta:
+        type: "object"
+        $ref: "#/definitions/ListMetaResponseModel"
+
+  UserResponseModel:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      name:
+        type: "string"
+      email:
+        type: "string"
+      phone:
+        type: "string"
+
+  CreateUserRequestModel:
+    type: "object"
+    required:
+      - "email"
+      - "phone"
+      - "password"
+      - "confirm_password"
+    properties:
+      name:
+        type: "string"
+      email:
+        type: "string"
+      phone:
+        type: "string"
+      password:
+        type: "string"
+      confirm_password:
+        type: "string"
+
+  UpdateUserRequestModel:
+    type: "object"
+    required:
+      - "email"
+      - "phone"
+    properties:
+      name:
+        type: "string"
+      email:
+        type: "string"
+      phone:
+        type: "string"
+      password:
+        type: "string"
+      confirm_password:
+        type: "string"
