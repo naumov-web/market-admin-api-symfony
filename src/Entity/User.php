@@ -15,7 +15,7 @@ class User
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="SEQUENCE")
-     * @ORM\SequenceGenerator(sequenceName="users_id_seq", initialValue=1, allocationSize=10)
+     * @ORM\SequenceGenerator(sequenceName="users_id_seq", initialValue=1)
      */
     private $id;
 
