@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass=ProductParameterRepository::class)
  * @ORM\Table(name="`product_parameters`")
  */
-class ProductParameter
+final class ProductParameter
 {
     /**
      * @ORM\Id
