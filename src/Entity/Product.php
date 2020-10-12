@@ -39,6 +39,12 @@ class Product
      */
     private $product_category;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=File::class)
+     * @ORM\JoinTable(name="product_files")
+     */
+    private $files;
+
     public function getId(): ?int
     {
         return $this->id;
