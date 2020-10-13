@@ -4,13 +4,21 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="`users`")
  */
-final class User
+final class User implements UserInterface
 {
+
+    /**
+     * Password salt
+     * @var string
+     */
+    public const PASSWORD_SALT = '!kRcR@RtOXYf0vun*Qx81E@DM';
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -30,48 +38,74 @@ final class User
     private $phone;
 
     /**
+     * @ORM\Column(type="string", length=500, nullable=false)
+     */
+    private $password;
+
+    /**
      * @ORM\Column(type="string", length=200, nullable=true)
      */
     private $name;
+
+    /**
+     * User constructor.
+     * @param string $email
+     * @param string $phone
+     */
+    public function __construct(string $email, string $phone)
+    {
+        $this->email = $email;
+        $this->phone = $phone;
+    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getEmail(): ?string
+    public function setPassword(string $password): self
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getRoles()
+    {
+        return [];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getSalt()
+    {
+        return self::PASSWORD_SALT;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getUsername()
     {
         return $this->email;
     }
 
-    public function setEmail(string $email): self
+    /**
+     * @inheritDoc
+     */
+    public function eraseCredentials()
     {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    public function getPhone(): ?string
-    {
-        return $this->phone;
-    }
-
-    public function setPhone(string $phone): self
-    {
-        $this->phone = $phone;
-
-        return $this;
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(?string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
     }
 }

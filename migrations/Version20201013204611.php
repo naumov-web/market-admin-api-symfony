@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20201012213451 extends AbstractMigration
+final class Version20201013204611 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -37,7 +37,7 @@ final class Version20201012213451 extends AbstractMigration
         $this->addSql('CREATE TABLE product_files (product_id INT NOT NULL, file_id INT NOT NULL, PRIMARY KEY(product_id, file_id))');
         $this->addSql('CREATE INDEX IDX_A7693B054584665A ON product_files (product_id)');
         $this->addSql('CREATE INDEX IDX_A7693B0593CB796C ON product_files (file_id)');
-        $this->addSql('CREATE TABLE "users" (id INT NOT NULL, email VARCHAR(1000) NOT NULL, phone VARCHAR(50) NOT NULL, name VARCHAR(200) DEFAULT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE "users" (id INT NOT NULL, email VARCHAR(1000) NOT NULL, phone VARCHAR(50) NOT NULL, password VARCHAR(500) NOT NULL, name VARCHAR(200) DEFAULT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_1483A5E9E7927C74 ON "users" (email)');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_1483A5E9444F97DD ON "users" (phone)');
         $this->addSql('ALTER TABLE "product_parameter_values" ADD CONSTRAINT FK_505522EB4584665A FOREIGN KEY (product_id) REFERENCES "products" (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
