@@ -14,3 +14,6 @@
 ###< symfony/phpunit-bridge ###
 /persistent_data/
 /.idea/
+###> lexik/jwt-authentication-bundle ###
+/config/jwt/*.pem
+###< lexik/jwt-authentication-bundle ###

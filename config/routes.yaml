@@ -9,3 +9,7 @@ docs_page:
 docs_file:
   path: /dev-tools/swagger-file
   controller: App\Controller\Web\DocsController::swaggerFile
+
+api:
+  resource: './api_routes.yaml'
+  prefix: api

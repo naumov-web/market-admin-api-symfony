@@ -69,7 +69,7 @@ final class UserCreateCommand extends Command
         $phone = $io->ask('Please, enter phone for new user');
         $password = $io->askHidden('Please, enter password for new user');
 
-        $user = $this->user_service->create($email, $phone, $password);
+        $this->user_service->create($email, $phone, $password);
 
         $io->success('User successfully created!');
 
