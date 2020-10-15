@@ -94,6 +94,11 @@ final class User implements UserInterface
         return self::PASSWORD_SALT;
     }
 
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
     /**
      * @inheritDoc
      */
