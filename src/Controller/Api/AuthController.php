@@ -3,8 +3,10 @@
 namespace App\Controller\Api;
 
 use App\Services\UserService;
+use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -14,6 +16,12 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
  */
 final class AuthController extends BaseApiController
 {
+
+    /**
+     * Login expired offset
+     * @var int
+     */
+    public const LOGIN_EXPIRED = 3600 * 12;
 
     /**
      * Validator instance
@@ -28,14 +36,26 @@ final class AuthController extends BaseApiController
     protected $user_service;
 
     /**
+     * JWT manager instance
+     * @var JWTTokenManagerInterface
+     */
+    protected $jwt_manager;
+
+    /**
      * AuthController constructor.
      * @param ValidatorInterface $validator
      * @param UserService $user_service
+     * @param JWTTokenManagerInterface $jwt_manager
      */
-    public function __construct(ValidatorInterface $validator, UserService $user_service)
+    public function __construct(
+        ValidatorInterface $validator,
+        UserService $user_service,
+        JWTTokenManagerInterface $jwt_manager
+    )
     {
         $this->validator = $validator;
         $this->user_service = $user_service;
+        $this->jwt_manager = $jwt_manager;
     }
 
     /**
@@ -66,9 +86,18 @@ final class AuthController extends BaseApiController
             return $this->errorsJson($errors);
         }
 
-        return $this->json([
-            'success' => true
-        ]);
+        $user = $this->user_service->getByCredentials($body['email'], $body['password']);
+
+        if ($user) {
+            return $this->json([
+                'success' => true,
+                'token' => $this->jwt_manager->create($user)
+            ]);
+        } else {
+            return $this->json([
+                'message' => 'Invalid email or password'
+            ], Response::HTTP_UNAUTHORIZED);
+        }
     }
 
 }

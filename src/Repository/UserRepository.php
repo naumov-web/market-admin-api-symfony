@@ -38,4 +38,22 @@ final class UserRepository extends ServiceEntityRepository
 
         return $user;
     }
+
+    /**
+     * Get user by email
+     *
+     * @param string $email
+     * @return User|null
+     */
+    public function getByEmail(string $email): ?User
+    {
+        /**
+         * @var User $user
+         */
+        $user = $this->findOneBy([
+            'email' => $email
+        ]);
+
+        return $user;
+    }
 }

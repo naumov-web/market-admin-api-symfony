@@ -26,6 +26,7 @@ final class UserService
     /**
      * UserService constructor.
      * @param UserRepository $repository
+     * @param UserPasswordEncoderInterface $password_encoder
      */
     public function __construct(UserRepository $repository, UserPasswordEncoderInterface $password_encoder)
     {
@@ -51,6 +52,24 @@ final class UserService
         $user = $this->repository->store($user);
 
         return $user;
+    }
+
+    /**
+     * Get user by credentials
+     *
+     * @param string $email
+     * @param string $password
+     * @return User|null
+     */
+    public function getByCredentials(string $email, string $password): ?User
+    {
+        $user = $this->repository->getByEmail($email);
+
+        if ($user && $this->password_encoder->isPasswordValid($user, $password)) {
+            return $user;
+        }
+
+        return null;
     }
 
 }
