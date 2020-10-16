@@ -1,3 +1,8 @@
 login:
   path: /login
   controller: App\Controller\Api\AuthController::login
+
+create_product_category:
+  path: /product-categories
+  controller: App\Controller\Api\ProductCategoriesController::create
+  methods: POST
