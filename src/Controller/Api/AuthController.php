@@ -18,12 +18,6 @@ final class AuthController extends BaseApiController
 {
 
     /**
-     * Login expired offset
-     * @var int
-     */
-    public const LOGIN_EXPIRED = 3600 * 12;
-
-    /**
      * Validator instance
      * @var ValidatorInterface
      */
@@ -59,7 +53,7 @@ final class AuthController extends BaseApiController
     }
 
     /**
-     * Get validation rules
+     * Get validation rules for login
      *
      * @return Assert\Collection
      */

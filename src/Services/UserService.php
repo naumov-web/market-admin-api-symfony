@@ -21,6 +21,10 @@ final class UserService
      */
     protected $repository;
 
+    /**
+     * Password encoder instance
+     * @var UserPasswordEncoderInterface
+     */
     protected $password_encoder;
 
     /**

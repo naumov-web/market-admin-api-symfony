@@ -58,11 +58,22 @@ final class User implements UserInterface
         $this->phone = $phone;
     }
 
+    /**
+     * Get user id
+     *
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * Set user password
+     *
+     * @param string $password
+     * @return $this
+     */
     public function setPassword(string $password): self
     {
         $this->password = $password;
@@ -94,6 +105,11 @@ final class User implements UserInterface
         return self::PASSWORD_SALT;
     }
 
+    /**
+     * Get user email
+     *
+     * @return string
+     */
     public function getEmail()
     {
         return $this->email;
