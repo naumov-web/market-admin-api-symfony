@@ -3,6 +3,7 @@
 namespace App\Controller\Api;
 
 use App\Services\ProductCategoryService;
+use App\Traits\UseListRequestValidation;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -17,6 +18,17 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
  */
 final class ProductCategoriesController extends BaseApiController
 {
+
+    use UseListRequestValidation;
+
+    /**
+     * Sortable fields for getting of items
+     * @var array
+     */
+    public const LIST_SORTABLE_FIELDS = [
+        'id',
+        'name'
+    ];
 
     /**
      * Validator instance
@@ -75,5 +87,28 @@ final class ProductCategoriesController extends BaseApiController
         return $this->json([
             'success' => true
         ], Response::HTTP_CREATED);
+    }
+
+    /**
+     * Get product categories list
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function index(Request $request): JsonResponse
+    {
+        $rules = $this->getListDefaultValidationRules(self::LIST_SORTABLE_FIELDS);
+        $parameters = $this->transformParameterTypes($request->query->all());
+        $errors = $this->validator->validate($parameters, $rules);
+
+        if (count($errors) > 0) {
+            return $this->errorsJson($errors);
+        }
+
+        $items_dto = $this->product_category_service->index($parameters);
+
+        return $this->itemsJson(
+            $items_dto
+        );
     }
 }
