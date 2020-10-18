@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\DTO\IndexDTO;
+use App\DTO\ListItemsDTO;
 use App\Entity\ProductCategory;
 use App\Repository\ProductCategoryRepository;
 use Doctrine\ORM\OptimisticLockException;
@@ -44,6 +46,19 @@ final class ProductCategoryService
         $category = $this->repository->store($category);
 
         return $category;
+    }
+
+    /**
+     * Get product categories
+     *
+     * @param array $parameters
+     * @return ListItemsDTO
+     */
+    public function index(array $parameters): ListItemsDTO
+    {
+        return $this->repository->index(
+            (new IndexDTO())->fill($parameters)
+        );
     }
 
 }

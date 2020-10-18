@@ -2,6 +2,7 @@
 
 namespace App\Controller\Api;
 
+use App\DTO\ListItemsDTO;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,6 +16,27 @@ use Symfony\Component\Validator\ConstraintViolationListInterface;
  */
 abstract class BaseApiController extends AbstractController
 {
+
+    /**
+     * Transform parameter types
+     *
+     * @param array $fields
+     * @return array
+     */
+    protected function transformParameterTypes(array $fields): array
+    {
+        $result = [];
+
+        foreach ($fields as $key => $value) {
+            if (intval($value)) {
+                $result[$key] = intval($value);
+            } else {
+                $result[$key] = $value;
+            }
+        }
+
+        return $result;
+    }
 
     /**
      * Get request body
@@ -66,6 +88,22 @@ abstract class BaseApiController extends AbstractController
         return $this->json([
             'errors' => $errors_list
         ], Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
+
+    /**
+     * Render json with items
+     *
+     * @param ListItemsDTO $dto
+     * @return JsonResponse
+     */
+    protected function itemsJson(ListItemsDTO $dto): JsonResponse
+    {
+        return $this->json([
+            'items' => $dto->getItems(),
+            'meta' => [
+                'count' => $dto->getCount()
+            ]
+        ]);
     }
 
     /**

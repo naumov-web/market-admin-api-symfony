@@ -2,6 +2,8 @@
 
 namespace App\Repository;
 
+use App\DTO\IndexDTO;
+use App\DTO\ListItemsDTO;
 use App\Entity\ProductCategory;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
@@ -37,5 +39,32 @@ final class ProductCategoryRepository extends ServiceEntityRepository
         $this->getEntityManager()->flush();
 
         return $category;
+    }
+
+    /**
+     * Get product categories list
+     *
+     * @param IndexDTO $params
+     * @return ListItemsDTO
+     */
+    public function index(IndexDTO $params): ListItemsDTO
+    {
+        $items = $this->findBy(
+            $params->getFilters(),
+            [
+                $params->getSortBy() => $params->getSortDirection()
+            ],
+            $params->getLimit(),
+            $params->getOffset()
+        );
+
+        $count = $this->count(
+            $params->getFilters()
+        );
+
+        return new ListItemsDTO(
+            $items,
+            $count
+        );
     }
 }

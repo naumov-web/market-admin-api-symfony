@@ -6,3 +6,8 @@ create_product_category:
   path: /product-categories
   controller: App\Controller\Api\ProductCategoriesController::create
   methods: POST
+
+get_product_categories:
+  path: /product-categories
+  controller: App\Controller\Api\ProductCategoriesController::index
+  methods: GET
