@@ -111,4 +111,33 @@ final class ProductCategoriesController extends BaseApiController
             $items_dto
         );
     }
+
+    /**
+     * Update product category
+     *
+     * @param Request $request
+     * @param int $id
+     * @return JsonResponse
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
+    public function update(Request $request, int $id): JsonResponse
+    {
+        $body = $this->getRequestBody($request, ['name']);
+        $errors = $this->validator->validate($body, $this->getCreateRules());
+
+        if (count($errors) > 0) {
+            return $this->errorsJson($errors);
+        }
+
+        $product_category = $this->product_category_service->getById($id);
+
+        if (!$product_category) {
+            return $this->notFoundJson();
+        }
+
+        $this->product_category_service->update($product_category, $body);
+
+        return $this->json(null, Response::HTTP_NO_CONTENT);
+    }
 }

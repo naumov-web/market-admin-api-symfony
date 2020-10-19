@@ -11,3 +11,10 @@ get_product_categories:
   path: /product-categories
   controller: App\Controller\Api\ProductCategoriesController::index
   methods: GET
+
+update_product_category:
+  path: /product-categories/{id}
+  controller: App\Controller\Api\ProductCategoriesController::update
+  methods: PUT
+  requirements:
+    id: '\d+'

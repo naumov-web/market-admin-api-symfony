@@ -6,6 +6,7 @@ use App\DTO\IndexDTO;
 use App\DTO\ListItemsDTO;
 use App\Entity\ProductCategory;
 use App\Repository\ProductCategoryRepository;
+use App\Services\Traits\UseDefaultServiceMethods;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 
@@ -15,6 +16,8 @@ use Doctrine\ORM\ORMException;
  */
 final class ProductCategoryService
 {
+
+    use UseDefaultServiceMethods;
 
     /**
      * Product category repository instance
@@ -59,6 +62,22 @@ final class ProductCategoryService
         return $this->repository->index(
             (new IndexDTO())->fill($parameters)
         );
+    }
+
+    /**
+     * Update product category
+     *
+     * @param ProductCategory $category
+     * @param array $fields
+     * @return ProductCategory
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
+    public function update(ProductCategory $category, array $fields): ProductCategory
+    {
+        $category->fill($fields);
+
+        return $this->repository->store($category);
     }
 
 }
