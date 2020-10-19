@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\DTO\IndexDTO;
 use App\DTO\ListItemsDTO;
 use App\Entity\ProductCategory;
+use App\Repository\Traits\UseDefaultRepositoryMethods;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
@@ -16,6 +17,9 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 final class ProductCategoryRepository extends ServiceEntityRepository
 {
+
+    use UseDefaultRepositoryMethods;
+
     /**
      * ProductCategoryRepository constructor.
      * @param ManagerRegistry $registry
@@ -23,22 +27,6 @@ final class ProductCategoryRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, ProductCategory::class);
-    }
-
-    /**
-     * Store product category
-     *
-     * @param ProductCategory $category
-     * @return ProductCategory
-     * @throws ORMException
-     * @throws OptimisticLockException
-     */
-    public function store(ProductCategory $category): ProductCategory
-    {
-        $this->getEntityManager()->persist($category);
-        $this->getEntityManager()->flush();
-
-        return $category;
     }
 
     /**
@@ -66,5 +54,21 @@ final class ProductCategoryRepository extends ServiceEntityRepository
             $items,
             $count
         );
+    }
+
+    /**
+     * Store model to database
+     *
+     * @param ProductCategory $category
+     * @return ProductCategory|null
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
+    public function store(ProductCategory $category): ?ProductCategory
+    {
+        $this->getEntityManager()->persist($category);
+        $this->getEntityManager()->flush();
+
+        return $category;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\UseDefaultEntityMethods;
 use App\Repository\ProductCategoryRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -11,6 +12,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 final class ProductCategory
 {
+
+    use UseDefaultEntityMethods;
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")

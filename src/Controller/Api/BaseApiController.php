@@ -91,6 +91,18 @@ abstract class BaseApiController extends AbstractController
     }
 
     /**
+     * Return json with message Not found and error code
+     *
+     * @return JsonResponse
+     */
+    protected function notFoundJson()
+    {
+        return $this->json([
+            'message' => 'Not found!'
+        ], Response::HTTP_NOT_FOUND);
+    }
+
+    /**
      * Render json with items
      *
      * @param ListItemsDTO $dto
