@@ -140,4 +140,25 @@ final class ProductCategoriesController extends BaseApiController
 
         return $this->json(null, Response::HTTP_NO_CONTENT);
     }
+
+    /**
+     * Delete product category
+     *
+     * @param int $id
+     * @return JsonResponse
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
+    public function delete(int $id): JsonResponse
+    {
+        $product_category = $this->product_category_service->getById($id);
+
+        if (!$product_category) {
+            return $this->notFoundJson();
+        }
+
+        $this->product_category_service->delete($product_category);
+
+        return $this->json(null, Response::HTTP_NO_CONTENT);
+    }
 }
