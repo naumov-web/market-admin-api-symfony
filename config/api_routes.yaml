@@ -18,3 +18,10 @@ update_product_category:
   methods: PUT
   requirements:
     id: '\d+'
+
+delete_product_category:
+  path: /product-categories/{id}
+  controller: App\Controller\Api\ProductCategoriesController::delete
+  methods: DELETE
+  requirements:
+    id: '\d+'

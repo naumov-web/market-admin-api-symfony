@@ -71,4 +71,18 @@ final class ProductCategoryRepository extends ServiceEntityRepository
 
         return $category;
     }
+
+    /**
+     * Delete product category
+     *
+     * @param ProductCategory $category
+     * @return void
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
+    public function delete(ProductCategory $category): void
+    {
+        $this->getEntityManager()->remove($category);
+        $this->getEntityManager()->flush();
+    }
 }

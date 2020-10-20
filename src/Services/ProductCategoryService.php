@@ -80,4 +80,23 @@ final class ProductCategoryService
         return $this->repository->store($category);
     }
 
+    /**
+     * Delete product category
+     *
+     * @param ProductCategory $category
+     * @return void
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
+    public function delete(ProductCategory $category): void
+    {
+        $products = $category->getProducts();
+
+        if ($products->count() > 0) {
+            throw new \DomainException('Product category has products!');
+        }
+
+        $this->repository->delete($category);
+    }
+
 }
