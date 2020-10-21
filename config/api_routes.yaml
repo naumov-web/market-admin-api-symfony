@@ -2,6 +2,7 @@ login:
   path: /login
   controller: App\Controller\Api\AuthController::login
 
+# Product categories
 create_product_category:
   path: /product-categories
   controller: App\Controller\Api\ProductCategoriesController::create
@@ -25,3 +26,9 @@ delete_product_category:
   methods: DELETE
   requirements:
     id: '\d+'
+
+# Users
+users:
+  path: /users
+  controller: App\Controller\Api\UsersController::create
+  methods: POST
