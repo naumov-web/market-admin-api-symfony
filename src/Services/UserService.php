@@ -44,14 +44,19 @@ final class UserService
      * @param string $email
      * @param string $phone
      * @param string $password
+     * @param string|null $name
      * @return User
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function create(string $email, string $phone, string $password): User
+    public function create(string $email, string $phone, string $password, string $name = null): User
     {
         $user = new User($email, $phone);
         $user->setPassword($this->password_encoder->encodePassword($user, $password));
+
+        if ($name) {
+            $user->setName($name);
+        }
 
         $user = $this->repository->store($user);
 
@@ -74,6 +79,18 @@ final class UserService
         }
 
         return null;
+    }
+
+    /**
+     * Get user by email or phone
+     *
+     * @param string $email
+     * @param string $phone
+     * @return User|null
+     */
+    public function getByEmailOrPhone(string $email, string $phone): ?User
+    {
+        return $this->repository->getByEmailOrPhone($email, $phone);
     }
 
 }

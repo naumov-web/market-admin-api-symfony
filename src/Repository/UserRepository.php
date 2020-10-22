@@ -56,4 +56,27 @@ final class UserRepository extends ServiceEntityRepository
 
         return $user;
     }
+
+    /**
+     * Get user by email or phone
+     *
+     * @param string $email
+     * @param string $phone
+     * @return User|null
+     */
+    public function getByEmailOrPhone(string $email, string $phone): ?User
+    {
+        /**
+         * @var User $user
+         */
+        $user = $this->createQueryBuilder('users')
+            ->orWhere('users.email = :email')
+            ->orWhere('users.phone = :phone')
+            ->setParameter('email', $email)
+            ->setParameter('phone', $phone)
+            ->getQuery()
+            ->execute();
+
+        return $user[0] ?? null;
+    }
 }
