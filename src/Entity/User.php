@@ -129,4 +129,17 @@ final class User implements UserInterface
     public function eraseCredentials()
     {
     }
+
+    /**
+     * Set name of user
+     *
+     * @param mixed $name
+     * @return User
+     */
+    public function setName($name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
 }
