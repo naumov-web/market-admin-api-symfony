@@ -17,4 +17,4 @@ RUN apt-get install unzip
 
 RUN curl -sL https://getcomposer.org/installer | php -- --install-dir /usr/bin --filename composer
 
-CMD composer install --working-dir=/var/www && php-fpm
+CMD php bin/console messenger:consume
