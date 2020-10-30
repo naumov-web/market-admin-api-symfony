@@ -142,4 +142,14 @@ final class User implements UserInterface
 
         return $this;
     }
+
+    /**
+     * Get name of user
+     *
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
 }

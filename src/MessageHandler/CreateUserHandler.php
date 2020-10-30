@@ -3,6 +3,7 @@
 namespace App\MessageHandler;
 
 use App\Message\CreateUser;
+use phpDocumentor\Reflection\Types\Self_;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
@@ -19,10 +20,33 @@ final class CreateUserHandler implements MessageHandlerInterface
      */
     public const SUBJECT = 'Регистрация нового пользователя';
 
+    /**
+     * Email message template
+     * @var string
+     */
+    public const MESSAGE_TEMPLATE = '
+        <h1>Добро пожаловать, {{name}}</h1>
+        <p>
+            Для вас создан аккаунт на сайте MarketAPI.
+        </p>
+    ';
+
+    /**
+     * @var \Swift_Mailer
+     */
     protected $mailer;
 
+    /**
+     * Logger instance
+     * @var LoggerInterface
+     */
     protected $logger;
 
+    /**
+     * CreateUserHandler constructor.
+     * @param \Swift_Mailer $mailer
+     * @param LoggerInterface $logger
+     */
     public function __construct(\Swift_Mailer $mailer, LoggerInterface $logger)
     {
         $this->mailer = $mailer;
@@ -42,7 +66,12 @@ final class CreateUserHandler implements MessageHandlerInterface
         $message = new \Swift_Message();
         $message->setSubject(self::SUBJECT)
             ->setTo($user->getEmail())
-            ->setBody('test123');
+            ->setBody(str_replace(
+                '{{name}}',
+                $user->getName(),
+                self::MESSAGE_TEMPLATE
+                )
+            );
 
         $this->mailer->send($message);
 
