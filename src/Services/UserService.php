@@ -3,9 +3,11 @@
 namespace App\Services;
 
 use App\Entity\User;
+use App\Message\CreateUser;
 use App\Repository\UserRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
@@ -28,14 +30,26 @@ final class UserService
     protected $password_encoder;
 
     /**
+     * Message bus instance
+     * @var MessageBusInterface
+     */
+    protected $message_bus;
+
+    /**
      * UserService constructor.
      * @param UserRepository $repository
      * @param UserPasswordEncoderInterface $password_encoder
+     * @param MessageBusInterface $message_bus
      */
-    public function __construct(UserRepository $repository, UserPasswordEncoderInterface $password_encoder)
+    public function __construct(
+        UserRepository $repository,
+        UserPasswordEncoderInterface $password_encoder,
+        MessageBusInterface $message_bus
+    )
     {
         $this->repository = $repository;
         $this->password_encoder = $password_encoder;
+        $this->message_bus = $message_bus;
     }
 
     /**
@@ -59,6 +73,10 @@ final class UserService
         }
 
         $user = $this->repository->store($user);
+
+        $this->message_bus->dispatch(
+            new CreateUser($user)
+        );
 
         return $user;
     }
