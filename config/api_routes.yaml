@@ -32,3 +32,9 @@ users:
   path: /users
   controller: App\Controller\Api\UsersController::create
   methods: POST
+
+# Handbooks
+get_all_handbooks:
+  path: /handbooks/all
+  controller: App\Controller\Api\HandbooksController::indexAll
+  methods: GET
