@@ -16,15 +16,15 @@ class ProductService
      * Product repository instance
      * @var ProductRepository
      */
-    protected $product_repository;
+    protected $repository;
 
     /**
      * ProductService constructor.
-     * @param ProductRepository $product_repository
+     * @param ProductRepository $repository
      */
-    public function __construct(ProductRepository $product_repository)
+    public function __construct(ProductRepository $repository)
     {
-        $this->product_repository = $product_repository;
+        $this->repository = $repository;
     }
 
     /**
@@ -35,7 +35,16 @@ class ProductService
      */
     public function create(array $data): Product
     {
+        $product = new Product(
+            $data['name'],
+            $data['price'],
+            $data['description'] ?? null
+        );
+        $product->setProductCategory($data['product_category']);
 
+        $product = $this->repository->store($product);
+
+        return $product;
     }
 
 }
