@@ -33,6 +33,12 @@ users:
   controller: App\Controller\Api\UsersController::create
   methods: POST
 
+# Products
+create_product:
+  path: /products
+  controller: App\Controller\Api\ProductsController::create
+  methods: POST
+
 # Handbooks
 get_all_handbooks:
   path: /handbooks/all

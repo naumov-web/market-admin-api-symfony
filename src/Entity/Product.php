@@ -45,6 +45,19 @@ final class Product
      */
     private $files;
 
+    /**
+     * Product constructor.
+     * @param string $name
+     * @param string $price
+     * @param string|null $description
+     */
+    public function __construct(string $name, string $price, string $description = null)
+    {
+        $this->name = $name;
+        $this->price = $price;
+        $this->description = $description;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
