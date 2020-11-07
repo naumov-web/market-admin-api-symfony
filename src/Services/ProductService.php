@@ -4,12 +4,14 @@ namespace App\Services;
 
 use App\Entity\Product;
 use App\Repository\ProductRepository;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 
 /**
  * Class ProductService
  * @package App\Services
  */
-class ProductService
+final class ProductService
 {
 
     /**
@@ -19,12 +21,20 @@ class ProductService
     protected $repository;
 
     /**
+     * File service instance
+     * @var FileService
+     */
+    protected $file_service;
+
+    /**
      * ProductService constructor.
      * @param ProductRepository $repository
+     * @param FileService $file_service
      */
-    public function __construct(ProductRepository $repository)
+    public function __construct(ProductRepository $repository, FileService $file_service)
     {
         $this->repository = $repository;
+        $this->file_service = $file_service;
     }
 
     /**
@@ -32,6 +42,8 @@ class ProductService
      *
      * @param array $data
      * @return Product
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function create(array $data): Product
     {
@@ -43,6 +55,10 @@ class ProductService
         $product->setProductCategory($data['product_category']);
 
         $product = $this->repository->store($product);
+
+        if (isset($data['files'])) {
+            $file_models = $this->file_service->createMultiple($data['files']);
+        }
 
         return $product;
     }
