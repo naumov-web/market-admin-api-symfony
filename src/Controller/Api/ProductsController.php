@@ -4,6 +4,8 @@ namespace App\Controller\Api;
 
 use App\Services\ProductCategoryService;
 use App\Services\ProductService;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -62,7 +64,8 @@ final class ProductsController extends BaseApiController
             'name' => [new Assert\NotBlank()],
             'description' => new Assert\Optional(new Assert\Type(['type' => 'string'])),
             'product_category_id' => [new Assert\NotBlank(), new Assert\Type(['type' => 'integer'])],
-            'price' => [new Assert\NotBlank(), new Assert\Type(['type' => 'float'])]
+            'price' => [new Assert\NotBlank(), new Assert\Type(['type' => 'float'])],
+            'files' => new Assert\Optional()
         ]);
     }
 
@@ -71,10 +74,12 @@ final class ProductsController extends BaseApiController
      *
      * @param Request $request
      * @return JsonResponse
+     * @throws ORMException
+     * @throws OptimisticLockException
      */
     public function create(Request $request): JsonResponse
     {
-        $body = $this->getRequestBody($request, ['name', 'description', 'product_category_id', 'price']);
+        $body = $this->getRequestBody($request, ['name', 'description', 'product_category_id', 'price', 'files']);
         $errors = $this->validator->validate($body, $this->getCreateRules());
 
         if (count($errors) > 0) {

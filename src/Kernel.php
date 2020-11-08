@@ -35,4 +35,14 @@ class Kernel extends BaseKernel
             (require $path)($routes->withPath($path), $this);
         }
     }
+
+    /**
+     * Get path of storage directory
+     *
+     * @return string
+     */
+    public function getStorageDir()
+    {
+        return dirname(__DIR__).'/var/storage';
+    }
 }
