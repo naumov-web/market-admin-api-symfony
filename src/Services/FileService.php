@@ -17,7 +17,7 @@ final class FileService
      * File path template
      * @var string
      */
-    public const PATH_TEMPLATE = '/storage/{{date}}/{{hash}}/{{file_name}}';
+    public const PATH_TEMPLATE = '/storage/{{date}}/{{hash}}';
 
     /**
      * File repository instance
@@ -51,7 +51,14 @@ final class FileService
     public function create(array $data): File
     {
         $path = $this->storeFile($data);
-        $file_model_data = [];
+
+        $file_model = new File(
+            $data['name'],
+            $path,
+            $data['mime']
+        );
+
+        return $this->repository->store($file_model);
     }
 
     /**
@@ -81,9 +88,24 @@ final class FileService
     {
         $base_path = $this->kernel->getStorageDir();
         $result_path = str_replace(
-            [],
-            [],
+            [
+                '{{date}}',
+                '{{hash}}'
+            ],
+            [
+                date('Y-m-d'),
+                sha1(microtime())
+            ],
             self::PATH_TEMPLATE
+        );
+
+        if (!is_dir($base_path . $result_path)) {
+            mkdir($base_path . $result_path, 0777, $recursive = true);
+        }
+
+        file_put_contents(
+            $base_path . $result_path . '/' . $data['name'],
+            base64_decode($data['content'])
         );
 
         return $result_path;

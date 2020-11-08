@@ -33,6 +33,19 @@ final class File
      */
     private $mime;
 
+    /**
+     * File constructor.
+     * @param string $name
+     * @param string $path
+     * @param string $mime
+     */
+    public function __construct(string $name, string $path, string $mime)
+    {
+        $this->name = $name;
+        $this->path = $path;
+        $this->mime = $mime;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -43,34 +56,13 @@ final class File
         return $this->name;
     }
 
-    public function setName(string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
     public function getPath(): ?string
     {
         return $this->path;
     }
 
-    public function setPath(string $path): self
-    {
-        $this->path = $path;
-
-        return $this;
-    }
-
     public function getMime(): ?string
     {
         return $this->mime;
-    }
-
-    public function setMime(string $mime): self
-    {
-        $this->mime = $mime;
-
-        return $this;
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ProductRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -56,6 +57,7 @@ final class Product
         $this->name = $name;
         $this->price = $price;
         $this->description = $description;
+        $this->files = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -107,6 +109,19 @@ final class Product
     public function setProductCategory(ProductCategory $product_category): self
     {
         $this->product_category = $product_category;
+
+        return $this;
+    }
+
+    /**
+     * Set files collection
+     *
+     * @param ArrayCollection $files
+     * @return $this
+     */
+    public function setFiles(ArrayCollection $files): self
+    {
+        $this->files = $files;
 
         return $this;
     }

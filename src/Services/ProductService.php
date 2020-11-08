@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Entity\Product;
 use App\Repository\ProductRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 
@@ -58,6 +59,12 @@ final class ProductService
 
         if (isset($data['files'])) {
             $file_models = $this->file_service->createMultiple($data['files']);
+
+            $product->setFiles(
+                new ArrayCollection(
+                    $file_models
+                )
+            );
         }
 
         return $product;
