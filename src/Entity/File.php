@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass=FileRepository::class)
  * @ORM\Table(name="`files`")
  */
-final class File
+class File
 {
     /**
      * @ORM\Id

@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass=ProductCategoryRepository::class)
  * @ORM\Table(name="`product_categories`")
  */
-final class ProductCategory
+class ProductCategory
 {
 
     use UseDefaultEntityMethods;

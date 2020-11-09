@@ -4,6 +4,7 @@ namespace App\Controller\Api;
 
 use App\Services\ProductCategoryService;
 use App\Services\ProductService;
+use App\Traits\UseListRequestValidation;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -19,6 +20,18 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 final class ProductsController extends BaseApiController
 {
 
+    use UseListRequestValidation;
+
+    /**
+     * Sortable fields for getting of items
+     * @var array
+     */
+    public const LIST_SORTABLE_FIELDS = [
+        'id',
+        'name',
+        'price'
+    ];
+
     /**
      * Validator instance
      * @var ValidatorInterface
@@ -29,7 +42,7 @@ final class ProductsController extends BaseApiController
      * Products service instance
      * @var ProductService
      */
-    protected $products_service;
+    protected $product_service;
 
     /**
      * Product categories service instance
@@ -49,7 +62,7 @@ final class ProductsController extends BaseApiController
     )
     {
         $this->validator = $validator;
-        $this->products_service = $products_service;
+        $this->product_service = $products_service;
         $this->product_category_service = $product_category_service;
     }
 
@@ -92,7 +105,7 @@ final class ProductsController extends BaseApiController
             throw new \LogicException('Product category not found!');
         }
 
-        $this->products_service->create(
+        $this->product_service->create(
             array_merge(
                 $body,
                 [
@@ -104,6 +117,29 @@ final class ProductsController extends BaseApiController
         return $this->json([
             'success' => true
         ], Response::HTTP_CREATED);
+    }
+
+    /**
+     * Get product categories list
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function index(Request $request): JsonResponse
+    {
+        $rules = $this->getListDefaultValidationRules(self::LIST_SORTABLE_FIELDS);
+        $parameters = $this->transformParameterTypes($request->query->all());
+        $errors = $this->validator->validate($parameters, $rules);
+
+        if (count($errors) > 0) {
+            return $this->errorsJson($errors);
+        }
+
+        $items_dto = $this->product_service->index($parameters);
+
+        return $this->itemsJson(
+            $items_dto
+        );
     }
 
 }

@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\DTO\IndexDTO;
+use App\DTO\ListItemsDTO;
 use App\Entity\Product;
 use App\Repository\ProductRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -68,6 +70,19 @@ final class ProductService
         }
 
         return $product;
+    }
+
+    /**
+     * Get product categories
+     *
+     * @param array $parameters
+     * @return ListItemsDTO
+     */
+    public function index(array $parameters): ListItemsDTO
+    {
+        return $this->repository->index(
+            (new IndexDTO())->fill($parameters)
+        );
     }
 
 }

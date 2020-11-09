@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass=ProductRepository::class)
  * @ORM\Table(name="`products`")
  */
-final class Product
+class Product
 {
     /**
      * @ORM\Id
