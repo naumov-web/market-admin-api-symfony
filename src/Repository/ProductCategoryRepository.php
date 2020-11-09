@@ -5,8 +5,6 @@ namespace App\Repository;
 use App\DTO\IndexDTO;
 use App\DTO\ListItemsDTO;
 use App\Entity\ProductCategory;
-use App\Repository\Traits\UseDefaultRepositoryMethods;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
@@ -15,10 +13,8 @@ use Doctrine\Persistence\ManagerRegistry;
  * Class ProductCategoryRepository
  * @package App\Repository
  */
-final class ProductCategoryRepository extends ServiceEntityRepository
+final class ProductCategoryRepository extends BaseRepository
 {
-
-    use UseDefaultRepositoryMethods;
 
     /**
      * ProductCategoryRepository constructor.

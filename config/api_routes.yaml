@@ -39,6 +39,11 @@ create_product:
   controller: App\Controller\Api\ProductsController::create
   methods: POST
 
+get_products:
+  path: /products
+  controller: App\Controller\Api\ProductsController::index
+  methods: GET
+
 # Handbooks
 get_all_handbooks:
   path: /handbooks/all
