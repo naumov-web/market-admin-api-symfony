@@ -1,0 +1,13 @@
+fos_elastica:
+    clients:
+        default: { host: elastic, port: 9200 }
+    indexes:
+        products:
+            properties:
+                name:
+                    type: text
+                description:
+                    type: text
+            persistence:
+                driver: orm
+                model: App\Entity\Product

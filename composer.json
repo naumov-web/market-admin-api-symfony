@@ -11,6 +11,7 @@
         "doctrine/doctrine-bundle": "^2.1",
         "doctrine/doctrine-migrations-bundle": "^3.0",
         "doctrine/orm": "^2.7",
+        "friendsofsymfony/elastica-bundle": "6.0.x-dev",
         "lcobucci/jwt": "^3.3",
         "lexik/jwt-authentication-bundle": "^2.8",
         "phpdocumentor/reflection-docblock": "^5.2",
