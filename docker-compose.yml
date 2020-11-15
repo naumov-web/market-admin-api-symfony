@@ -91,3 +91,18 @@ services:
       - "1025:1025"
     networks:
       - default-network
+
+  elastic:
+    image: elasticsearch:7.9.3
+    container_name: market_api_symfony_elastic
+    restart: unless-stopped
+    tty: true
+    environment:
+      - discovery.type=single-node
+      - bootstrap.memory_lock=true
+    volumes:
+      - ./persistent_data/elastic:/usr/share/elasticsearch/data
+    ports:
+      - "${DOCKER_ELASTIC_PORT}:9200"
+    networks:
+      - default-network
